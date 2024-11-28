@@ -15,62 +15,41 @@ const drawGame = () => {
     msg.innerText = `The game is Draw`;
     msg.style.background = "#081b31";
 }
-const winGame = (computerChoice, userChoice) => {
-    if(userChoice === "rock") {
-        if(computerChoice === "scissors"){
-            msg.innerText = `You Won!! ${userChoice} beats ${computerChoice} `;
-            userScore++;
-            disUserScore.innerText = userScore;
-            msg.style.background = "green";
-        }
-        else{
-            msg.innerText = `You lost. ${computerChoice} beats ${userChoice} `;
-            compScore++;
-            disCompScore.innerText = compScore;
-            msg.style.background = "red";
-        }
+const winGame = (computerChoice, userChoice, userWin) => {
+    if(userWin) {
+        msg.innerText = `Congratulations!! You won, ${userChoice} beats ${computerChoice}`;
+        msg.style.backgroundColor = "green";
+        userScore++;
+        disUserScore.innerText = userScore;
+       
     }
-    else if(userChoice === "paper") {
-        if(computerChoice === "rock"){
-            msg.innerText = `You Won!! ${userChoice} beats ${computerChoice} `;
-            userScore++;
-            disUserScore.innerText = userScore;
-            msg.style.background = "green";
-        }
-        else{
-            msg.innerText = `You lost. ${computerChoice} beats ${userChoice} `;
-            compScore++;
-            disCompScore.innerText = compScore;
-            msg.style.background = "red";
-        }
-    }
-    else if(userChoice === "scissors") {
-        if(computerChoice === "paper"){
-            msg.innerText = `You Won!! ${userChoice} beats ${computerChoice} `;
-            userScore++;
-            disUserScore.innerText = userScore;
-            msg.style.background = "green";
-        }
-        else{
-            msg.innerText = `You lost. ${computerChoice} beats ${userChoice} `;
-            compScore++;
-            disCompScore.innerText = compScore;
-            msg.style.background = "red";
-
-        }
+    else {
+        msg.innerText = `You Lost, ${computerChoice} beats ${userChoice}`;
+        msg.style.backgroundColor = "red";
+        compScore++;
+        disCompScore.innerText = compScore;
     }
 }
 
 const playGame = (userChoice) => {
-    console.log("The user choice is",userChoice);
     const computerChoice = genCompChoice();
-    console.log("Computer choice is",computerChoice);
     if(userChoice === computerChoice){
         drawGame();
     }
     else{
-        winGame(computerChoice,userChoice);
+        let userWin = true;
+        if(userChoice === "rock") {
+            userWin = computerChoice === "scissors"? true:false;
+        }
+        else if (userChoice === "paper") {
+            userWin = computerChoice === "rock"? true:false;
+        }
+        else if(userChoice === "scissors") {
+            userWin = computerChoice === "paper"? true:false; 
+        }
+        winGame(computerChoice, userChoice, userWin);
     }
+    
 }
 
 choices.forEach((choice) => {
